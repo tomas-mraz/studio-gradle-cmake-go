@@ -1,0 +1,3 @@
+/home/tomas/git-osobni-github/studio-gradle-cmake-go/aplikace2/app/.cxx/Debug/4zb12x4p/arm64-v8a/CMakeFiles/build-go-lib.dir
+/home/tomas/git-osobni-github/studio-gradle-cmake-go/aplikace2/app/.cxx/Debug/4zb12x4p/arm64-v8a/CMakeFiles/edit_cache.dir
+/home/tomas/git-osobni-github/studio-gradle-cmake-go/aplikace2/app/.cxx/Debug/4zb12x4p/arm64-v8a/CMakeFiles/rebuild_cache.dir

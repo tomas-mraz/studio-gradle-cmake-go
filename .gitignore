@@ -11,9 +11,7 @@
 /build
 /captures
 .externalNativeBuild
-.cxx
 local.properties
 .gradle
 .idea
 .kotlin
-.cxx
