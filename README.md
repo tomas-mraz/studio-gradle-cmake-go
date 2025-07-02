@@ -27,12 +27,13 @@ ninja
 
 # What do not work
 
-### JSON file linking not existing build files
+JSON file linking not existing build files
 
-In the JSON file `aplikace2/app/.cxx/Debug/3v82m1s2/arm64-v8a/.cmake/api/v1/reply/target-build_go_lib-Debug-9d2ff66b6199410e96b2.json` are links to not existing files like
-`"path" : "/home/tomas/aplikace2/app/.cxx/Debug/3v82m1s2/arm64-v8a/CMakeFiles/build_go_lib",`
+In the JSON file `aplikace2/app/.cxx/Debug/3v82m1s2/arm64-v8a/.cmake/api/v1/reply/target-build-go-lib-9d2ff66b6199410e96b2.json` are links to not existing files like
+`"path" : "/home/tomas/aplikace2/app/.cxx/Debug/3v82m1s2/arm64-v8a/CMakeFiles/build-go-lib",`
+and file: same-path/CMakeFiles/build-go-lib.rule
 
-### Gradle ends with
+Gradle ends with
 
 `C/C++: /home/tomas/aplikace2/app/src/main/cpp/CMakeLists.txt debug|arm64-v8a : There was an error parsing CMake File API result. Please open a bug with zip of /home/tomas/aplikace2/app/.cxx/Debug/3v82m1s2/arm64-v8a`
 
@@ -49,7 +50,7 @@ Full log in file gradle.log and https://gradle.com/s/qvqm6v4al43c2
 - cmake 4.0.2 (from Android SDK)
 - OpenJDK 17.0.15
 - Android SDK - Android 15
-- Android NDK - r26d (older because of application)
+- Android NDK - r26d (older because of go/clang [incompatibility](https://github.com/golang/go/issues/74410) )
 - Android Studio - Narwhal 2025.1.1
 
 
@@ -65,11 +66,9 @@ Full log in file gradle.log and https://gradle.com/s/qvqm6v4al43c2
 
 # What is not working?
 
-It looks like cmake create structure which gradle plugin do not understand.
+It looks like cmake create structure of [File API](https://cmake.org/cmake/help/latest/manual/cmake-file-api.7.html) which Gradle plugin do not understand. Probably because of missing files (CMakeFiles/build-go-lib and CMakeFiles/build-go-lib.rule) which are mentioned in target-build-go-lib-9d2ff66b6199410e96b2.json.
 
 Cmake is confused because there are no .cpp source files. Compiling .so library with Go marked like "UTILITY" instead "SHARED_LIBRARY".
-
-Build file for Ninja looks broken too with duplicit target but it isn't his fault. Cmake generated build file. And cmake si confused ... shit shit
 
 # Sources
 
