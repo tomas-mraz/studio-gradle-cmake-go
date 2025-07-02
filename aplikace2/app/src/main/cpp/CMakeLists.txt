@@ -14,9 +14,17 @@ set(CXX ${ANDROID_TOOLCHAIN_DIR}/aarch64-linux-android${ANDROID_API}-clang++)
 set(GOOS android)
 set(GOARCH arm64)
 
-# Definuj importovanou knihovnu
+# IMPORTED allows dependency on a library file outside the project.
 add_library(go-lib SHARED IMPORTED)
+
+# IMPORTED_LOCATION specifies the location of the library file on disk
 set_target_properties(go-lib PROPERTIES IMPORTED_LOCATION ${SO_OUTPUT})
+
+# Add the library to this project
+target_link_libraries(
+        ${PROJECT_NAME}
+        go-lib
+)
 
 # Cíl pro sestavení knihovny
 add_custom_target(build-go-lib ALL DEPENDS ${SO_OUTPUT})
