@@ -59,7 +59,7 @@ Full log in file gradle.log and https://gradle.com/s/qvqm6v4al43c2
 
 ```bash
 ./gradlew clean
-./gradlew assemble
+./gradlew build
 
 ./gradlew assembleDebug --debug --stacktrace --scan  # for full logs
 
