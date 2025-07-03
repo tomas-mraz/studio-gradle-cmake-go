@@ -49,7 +49,7 @@ Full log in file gradle.log and https://gradle.com/s/qvqm6v4al43c2
 - Gradle 8.14.2 (standalone wrapper)
 - cmake 4.0.2 (from Android SDK)
 - Ninja 1.12.1 (from Android SDK)
-- OpenJDK 17.0.15
+- OpenJDK 17.0.15 (system package)
 - Android SDK - Android 15
 - Android NDK - r26d (older because of go/clang [incompatibility](https://github.com/golang/go/issues/74410) )
 - Android Studio - Narwhal 2025.1.1
