@@ -4,7 +4,7 @@ The goal is to build directly from Android Studio native Golang Android applicat
 Trying only ARM 64bit platform. 
 
 There is build process started in Android Studio which looks like:
-[Android Studio] --> [Gradle] --> [cmake] --> [go]
+[Android Studio] --> [Gradle] --> [plugin com.android.build.api.dsl.NdkBuild] --> [CMake] --> [Ninja] --> [go build]
 
 ## What works
 
@@ -46,8 +46,9 @@ Gradle ends with
 Full log in file gradle.log and https://gradle.com/s/qvqm6v4al43c2
 
 # Tested versions:
-- Gradle 8.14.2
+- Gradle 8.14.2 (standalone wrapper)
 - cmake 4.0.2 (from Android SDK)
+- Ninja 1.12.1 (from Android SDK)
 - OpenJDK 17.0.15
 - Android SDK - Android 15
 - Android NDK - r26d (older because of go/clang [incompatibility](https://github.com/golang/go/issues/74410) )
