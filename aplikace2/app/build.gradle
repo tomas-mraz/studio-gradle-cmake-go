@@ -1,6 +1,6 @@
 plugins {
     alias(libs.plugins.android.application)
-//    alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.kotlin.android)
 }
 
 android {
@@ -17,10 +17,10 @@ android {
 
 //        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         externalNativeBuild {
-            cmake {
-                abiFilters "arm64-v8a"
+//            cmake {
+//                abiFilters "arm64-v8a"
 //                cppFlags '-std=c++11'
-            }
+//            }
         }
     }
 
@@ -47,14 +47,51 @@ android {
         }
     }
 
-    externalNativeBuild {
-        cmake {
-            path file('src/main/cpp/CMakeLists.txt')
-            version='4.0.2'
+//    externalNativeBuild {
+//        cmake {
+//            path file('src/main/cpp/CMakeLists.txt')
+//            version='4.0.2'
 //            targets "build_go_lib"
 //            version='3.22.1'
 //            buildStagingDirectory 'build-native'
+//        }
+//    }
+
+    // Go build task
+    applicationVariants.all { variant ->
+        def goOutputDir = file("src/main/jniLibs/arm64-v8a")
+
+        def goBuildTask = tasks.register("buildGoLib${variant.name.capitalize()}", Exec) {
+            group = "build"
+            description = "Compile Go native library for ${variant.name}"
+
+            // Cesta ke clang z NDK
+            def ndkPath = "/home/tomas/Android/Sdk/ndk/26.3.11579264"
+            def toolchain = "${ndkPath}/toolchains/llvm/prebuilt/linux-x86_64/bin"
+            def ccPath = "${toolchain}/aarch64-linux-android25-clang"
+            def cxxPath = "${toolchain}/aarch64-linux-android25-clang++"
+
+            environment "GOOS", "android"
+            environment "GOARCH", "arm64"
+            environment "CGO_ENABLED", "1"
+            environment "CC", ccPath
+            environment "CXX", cxxPath
+
+            // Výstupní složka
+            outputs.dir "/home/tomas/git-osobni-github/studio-gradle-cmake-go/aplikace2/app/src/main/jniLibs/arm64-v8a"
+
+            doFirst {
+                goOutputDir.mkdirs()
+            }
+
+            workingDir "src/main/go"
+            commandLine "go", "build", "-buildmode=c-shared", "-o", "${goOutputDir}/libvulkandraw.so", "app_android/main.go"
         }
+
+        // Zajistit že se spustí před buildem
+	tasks.named("preBuild").configure {
+	    dependsOn goBuildTask
+	}
     }
 }
 
